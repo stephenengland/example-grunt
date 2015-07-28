@@ -1,8 +1,8 @@
 # ExampleGrunt
 A tutorial on using Grunt.js with examples
 
-* [Step 1](#Step-1)
-* [Step 2](#Step-2)
+* [Step 1 - Grunt Basics and jshint](#Step-1)
+* [Step 2 - Static Webserver with Livereload and Watch](#Step-2)
 
 ## Getting Started
 * Install Node.js
@@ -17,7 +17,7 @@ git clone https://github.com/thealah/example-grunt.git
 ```
 
 <a name="Step-1"></a>
-## Step 1
+## Step 1 - Grunt Basics and jshint
 
 ```
 npm install grunt --save-dev
@@ -43,7 +43,7 @@ grunt bar
 ```
 
 <a name="Step-2"></a>
-## Step 2
+## Step 2 - Static Webserver with Livereload and Watch
 
 ```
 npm install --save-dev grunt-contrib-connect grunt-contrib-watch
@@ -55,6 +55,31 @@ Try out the static http server with live-reload! It automatically runs jshint on
 
 ```
 grunt
+```
+
+<a name="Step-3"></a>
+## Step 3 - Minification, variables, and utilizing multiple targets
+
+```
+npm install --save-dev grunt-contrib-htmlmin grunt-contrib-uglify grunt-contrib-clean
+```
+
+Open the Gruntfile.js and copy paste [step-3/Gruntfile.js](step-3/Gruntfile.js) into it.
+
+Try out the minified javascript and html that is output to the "dist" directory.
+
+```
+grunt build
+
+grunt spotCheck
+```
+
+Notice that there is a sourceMap file that references back to full source javascript.
+
+To see a grunt task that minifies and combines files, run:
+
+```
+grunt uglify:allScripts
 ```
 
 ## Other Tips and Tricks

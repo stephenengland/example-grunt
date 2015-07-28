@@ -2,7 +2,7 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
-
+    //Step 1
     jshint: {
       options: {
         jshintrc: ".jshintrc"
@@ -11,6 +11,7 @@ module.exports = function (grunt) {
       all: ['Gruntfile.js', 'www/**/*.js']
     },
 
+    //Step 2
     connect: {
       server: {
         options: {
@@ -32,7 +33,7 @@ module.exports = function (grunt) {
       html: {
         files: ['www/**.html']
       }
-    }
+    },
   });
 
   grunt.registerTask('scriptsChanged', 'This shows that javascript changed.', function() {

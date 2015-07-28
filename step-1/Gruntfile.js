@@ -2,14 +2,14 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
-
+    //Step 1
     jshint: {
       options: {
         jshintrc: ".jshintrc"
       }
       actualCode: ['www/**/*.js'],
       all: ['Gruntfile.js', 'www/**/*.js']
-    }
+    },
 
 
   });
