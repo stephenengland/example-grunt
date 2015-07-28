@@ -1,6 +1,9 @@
 # ExampleGrunt
 A tutorial on using Grunt.js with examples
 
+* [Step 1](#Step-1)
+* [Step 2](#Step-2)
+
 ## Getting Started
 * Install Node.js
 * Install Grunt's command line tool
