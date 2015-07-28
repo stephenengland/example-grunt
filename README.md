@@ -4,6 +4,7 @@ A tutorial on using Grunt.js with examples
 * [Step 1 - Grunt Basics and jshint](#Step-1)
 * [Step 2 - Static Webserver with Livereload and Watch](#Step-2)
 * [Step 3 - Minification, variables, and utilizing multiple targets](#Step-3)
+* [Step 4 - Git Hooks and more Front-End tasks](#Step-4)
 
 ## Getting Started
 * Install Node.js
