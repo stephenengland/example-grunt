@@ -83,6 +83,27 @@ To see a grunt task that minifies and combines files, run:
 grunt uglify:allScripts
 ```
 
+<a name="Step-4"></a>
+## Step 4 - Git Hooks and more Front-End tasks
+
+```
+npm install --save-dev grunt-githooks grunt-prettify
+```
+
+Open the Gruntfile.js and copy paste [step-4/Gruntfile.js](step-4/Gruntfile.js) into it.
+
+Use githooks by running the following command, then attempt a commit.
+
+```
+grunt githooks:build
+```
+
+Prettify your HTML by using grunt-prettify
+```
+grunt prettify
+```
+
+
 ## Other Tips and Tricks
 
 * Bash Shell tab auto-completion
@@ -92,6 +113,5 @@ Add the following to your ~/.bashrc file
 eval "$(grunt --completion=bash)"
 ```
 
-* Split your grunt config into multiple files
+* Split your grunt config into multiple files - [load-grunt-configs project](https://github.com/creynders/load-grunt-configs)
 
-[load-grunt-configs project](https://github.com/creynders/load-grunt-configs)
