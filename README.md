@@ -16,6 +16,7 @@ npm install -g grunt-cli
 git clone https://github.com/thealah/example-grunt.git
 ```
 
+<a name="Step-1"></a>
 ## Step 1
 
 ```
@@ -41,6 +42,7 @@ grunt foo
 grunt bar
 ```
 
+<a name="Step-2"></a>
 ## Step 2
 
 ```
