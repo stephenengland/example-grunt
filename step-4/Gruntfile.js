@@ -14,37 +14,6 @@ module.exports = function (grunt) {
     },
 
     //Step 3
-    connect: {
-      dev: {
-        options: {
-          port: 8080,
-          base: 'www',
-          livereload: true,
-          open: true
-        }
-      },
-      dist: {
-        options: {
-          port: 8080,
-          keepalive: true,
-          open: {
-            target: 'http://localhost:8080/dist/'
-          }
-        }
-      }
-    },
-    watch: {
-      options: {
-          livereload: true
-      },
-      scripts: {
-        files: ['www/**/*.js'],
-        tasks: ['jshint']
-      },
-      html: {
-        files: ['www/**.html']
-      }
-    },
     uglify: {
       options: {
         mangle: false
@@ -89,6 +58,36 @@ module.exports = function (grunt) {
     },
 
     //Step 4
+    connect: {
+      dist: {
+        options: {
+          port: 8080,
+          livereload: true,
+          base: 'dist',
+          open: {
+            target: 'http://localhost:8080/'
+          }
+        }
+      }
+    },
+    watch: {
+      options: {
+          livereload: true
+      },
+      scripts: {
+        files: ['www/**/*.js'],
+        tasks: ['jshint', 'uglify:helloWorld']
+      },
+      html: {
+        files: ['www/*.html'],
+        tasks: ['htmlmin:dev']
+      },
+      styles: {
+        files: ['www/sass/*.scss'],
+        tasks: ['sass']
+      }
+    },
+
     githooks: {
       build: {
         'pre-commit': 'jshint prettify'
@@ -104,6 +103,16 @@ module.exports = function (grunt) {
         dest: 'www/'
       }
     },
+    sass: {
+        options: {
+            sourceMap: true
+        },
+        dist: {
+            files: {
+                'dist/styles/main.css': 'www/sass/**/*.scss'
+            }
+        }
+    }
   });
 
   //Load grunt "plugins" from npm
@@ -130,9 +139,10 @@ module.exports = function (grunt) {
   //https://github.com/jonschlinkert/grunt-prettify
   grunt.loadNpmTasks('grunt-prettify');
 
+  grunt.loadNpmTasks('grunt-sass');
+
   //Set the default task - this will be what happens when you run the command  "grunt" in your directory.
-  grunt.registerTask('default', ['jshint:all', 'prettify', 'clean', 'connect:dev', 'watch']);
+  grunt.registerTask('default', ['jshint:all', 'prettify', 'sass', 'clean', 'uglify:helloWorld', 'htmlmin:dev', 'connect', 'watch']);
   //Additional tasks
-  grunt.registerTask('build', ['jshint', 'clean', 'uglify:helloWorld', 'htmlmin:dist']);
-  grunt.registerTask('spotCheck', ['build', 'connect:dist']);
+  grunt.registerTask('build', ['jshint', 'sass', 'clean', 'uglify:helloWorld', 'htmlmin:dist']);
 };

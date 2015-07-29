@@ -115,4 +115,7 @@ eval "$(grunt --completion=bash)"
 ```
 
 * Split your grunt config into multiple files - [load-grunt-configs project](https://github.com/creynders/load-grunt-configs)
-
+* [Minify images](https://github.com/gruntjs/grunt-contrib-imagemin)
+* [Asset revisioning by using file content hashing](https://github.com/yeoman/grunt-filerev)
+* [Converting a set of images into a spritesheet](https://github.com/Ensighten/grunt-spritesmith)
+* [Replaces references to non-optimized scripts or stylesheets](https://github.com/yeoman/grunt-usemin)
