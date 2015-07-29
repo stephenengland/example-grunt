@@ -1,5 +1,10 @@
 module.exports = function (grunt) {
-  var timestamp = new Date().getTime();
+  var allJavascriptFiles = 'www/**/*.js';
+  var allHtmlFiles = 'www/**/*.html';
+  var allStyleFiles = 'www/**/*.scss';
+  var distributionFolder = 'dist';
+  var devFolder = 'dev';
+  var helloWorldScript = 'www/js/helloWorld.js';
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -9,31 +14,61 @@ module.exports = function (grunt) {
       options: {
         jshintrc: ".jshintrc"
       },
-      actualCode: ['www/**/*.js'],
-      all: ['Gruntfile.js', 'www/**/*.js']
+      actualCode: [allJavascriptFiles],
+      all: ['Gruntfile.js', allJavascriptFiles]
     },
 
     //Step 3
+    connect: {
+      dev: {
+        options: {
+          port: 8080,
+          livereload: true,
+          base: devFolder + '/www',
+          open: {
+            target: 'http://localhost:8080/'
+          }
+        }
+      },
+      dist: {
+        options: {
+          port: 8080,
+          livereload: false,
+          keepalive: true,
+          base: distributionFolder + '/www',
+          open: {
+            target: 'http://localhost:8080/'
+          }
+        }
+      }
+    },
     uglify: {
       options: {
-        mangle: false
+        mangle: false,
+        sourceMap : true
       },
       allScripts: {
         options: {
-          sourceMap : true,
-          sourceMapName : 'dist/all' + timestamp + '.min.js.map'
+          sourceMapName : distributionFolder + '/all.min.js.map'
         },
-        src: 'www/**/*.js',
-        dest: 'dist/all.min.js'
+        src: allJavascriptFiles,
+        dest: distributionFolder + '/all.min.js'
       },
       helloWorld: {
         options: {
-          sourceMap: true,
-          sourceMapName: 'dist/helloWorld' + timestamp + '.js.map'
+          sourceMapName: distributionFolder + "/" + helloWorldScript + '.map'
         },
         src: 'www/js/helloWorld.js',
-        dest: 'dist/js/helloWorld.js'
+        dest: distributionFolder + "/" + helloWorldScript
       }
+    },
+    copy: {
+      dev: {
+        files: [
+          { expand: true, src: [allHtmlFiles], dest: devFolder + '/' },
+          { expand: true, src: [allJavascriptFiles], dest: devFolder + '/' }
+        ]
+      },
     },
     htmlmin: {
       dist: {
@@ -41,76 +76,55 @@ module.exports = function (grunt) {
           removeComments: true,
           collapseWhitespace: true
         },
-        files: {
-          'dist/index.html': 'www/index.html'
-        }
-      },
-      dev: {
-        files: {
-          'dist/index.html': 'www/index.html'
-        }
+        files: [
+          { expand: true, src: [allHtmlFiles], dest: distributionFolder }
+        ]
       }
     },
     clean: {
-      build: {
-        src: ["dist/*.js.map"]
-      }
+      dev: {
+        src: [devFolder]
+      },
+      dist: {
+        src: [distributionFolder]
+      },
     },
 
     //Step 4
-    connect: {
-      dist: {
-        options: {
-          port: 8080,
-          livereload: true,
-          base: 'dist',
-          open: {
-            target: 'http://localhost:8080/'
-          }
-        }
-      }
-    },
     watch: {
       options: {
           livereload: true
       },
       scripts: {
-        files: ['www/**/*.js'],
+        files: [allJavascriptFiles],
         tasks: ['jshint', 'uglify:helloWorld']
       },
       html: {
-        files: ['www/*.html'],
+        files: [allHtmlFiles],
         tasks: ['htmlmin:dev']
       },
       styles: {
-        files: ['www/sass/*.scss'],
-        tasks: ['sass']
+        files: [allStyleFiles],
+        tasks: ['sass:dev']
       }
     },
-
     githooks: {
       build: {
         'pre-commit': 'jshint prettify'
       }
     },
     prettify: {
-      html: {
-        //This is a special globbing syntax for expanding files in Grunt. - http://gruntjs.com/api/grunt.file#globbing-patterns
-        expand: true,
-        cwd: 'www/',
-        ext: '.html',
-        src: ['*.html'],
-        dest: 'www/'
-      }
+      html: { expand: true, cwd: 'www/', ext: '.html', src: ['*.html'], dest: 'www/' }
     },
     sass: {
         options: {
             sourceMap: true
         },
+        dev: {
+            files: [{ src: [allStyleFiles], dest: devFolder + '/www/styles/main.css' }]
+        },
         dist: {
-            files: {
-                'dist/styles/main.css': 'www/sass/**/*.scss'
-            }
+            files: [{ src: [allStyleFiles], dest: distributionFolder + '/www/styles/main.css' }]
         }
     }
   });
@@ -130,6 +144,9 @@ module.exports = function (grunt) {
   //https://github.com/gruntjs/grunt-contrib-htmlmin
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
 
+  //https://github.com/gruntjs/grunt-contrib-copy
+  grunt.loadNpmTasks('grunt-contrib-copy');
+
   //https://github.com/gruntjs/grunt-contrib-clean
   grunt.loadNpmTasks('grunt-contrib-clean');
 
@@ -142,7 +159,10 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-sass');
 
   //Set the default task - this will be what happens when you run the command  "grunt" in your directory.
-  grunt.registerTask('default', ['jshint:all', 'prettify', 'sass', 'clean', 'uglify:helloWorld', 'htmlmin:dev', 'connect', 'watch']);
+  grunt.registerTask('default', ['buildDev', 'connect:dev', 'watch']);
   //Additional tasks
-  grunt.registerTask('build', ['jshint', 'sass', 'clean', 'uglify:helloWorld', 'htmlmin:dist']);
+
+  grunt.registerTask('buildDev', ['jshint', 'prettify', 'clean:dev', 'sass:dev', 'copy:dev']);
+  grunt.registerTask('build', ['jshint', 'clean:dist', 'sass:dist', 'uglify:helloWorld', 'htmlmin:dist']);
+  grunt.registerTask('spotCheck', ['build', 'connect:dist']);
 };

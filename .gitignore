@@ -9,5 +9,6 @@ build/Release
 node_modules
 
 dist
+dev
 
 step-0

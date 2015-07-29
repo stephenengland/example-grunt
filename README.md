@@ -63,22 +63,26 @@ grunt
 ## Step 3 - Minification, variables, and utilizing multiple targets
 
 ```
-npm install --save-dev grunt-contrib-htmlmin grunt-contrib-uglify grunt-contrib-clean
+npm install --save-dev grunt-contrib-htmlmin grunt-contrib-uglify grunt-contrib-clean grunt-contrib-copy
 ```
 
 Open the Gruntfile.js and copy paste [step-3/Gruntfile.js](step-3/Gruntfile.js) into it.
 
-Try out the minified javascript and html that is output to the "dist" directory.
 
+Try out the minification and build:
 ```
+grunt buildDev
+
 grunt build
 
 grunt spotCheck
 ```
 
+The minified javascript and html are output to the "dist" directory. You can use the non-minified versions still in the "dev" directory.
+
 Notice that there is a sourceMap file that references back to full source javascript.
 
-To see a grunt task that minifies and combines files, run:
+To see a grunt task that minifies and combines all javascript files, run:
 
 ```
 grunt uglify:allScripts
