@@ -113,8 +113,29 @@ module.exports = function (grunt) {
         'pre-commit': 'jshint prettify'
       }
     },
-    prettify: {
-      html: { expand: true, cwd: 'www/', ext: '.html', src: ['*.html'], dest: 'www/' }
+    //Beautifier - Script and Html files
+    jsbeautifier : {
+        files : [allJavascriptFiles, allHtmlFiles, allStyleFiles],
+        options : {
+          js: {
+              breakChainedMethods: false,
+              e4x: false,
+              evalCode: false,
+              indentWithTabs: false,
+              jslintHappy: false,
+              keepArrayIndentation: false,
+              keepFunctionIndentation: false,
+              spaceBeforeConditional: true,
+              spaceInParen: false,
+              unescapeStrings: false,
+              wrapLineLength: 0,
+              endWithNewline: true
+          },
+          html: { },
+          css: {
+              fileTypes: [".scss"]
+          }
+        }
     },
     sass: {
         options: {
@@ -153,8 +174,7 @@ module.exports = function (grunt) {
   //https://github.com/wecodemore/grunt-githooks
   grunt.loadNpmTasks('grunt-githooks');
 
-  //https://github.com/jonschlinkert/grunt-prettify
-  grunt.loadNpmTasks('grunt-prettify');
+  grunt.loadNpmTasks('grunt-jsbeautifier');
 
   grunt.loadNpmTasks('grunt-sass');
 
@@ -162,7 +182,7 @@ module.exports = function (grunt) {
   grunt.registerTask('default', ['buildDev', 'connect:dev', 'watch']);
   //Additional tasks
 
-  grunt.registerTask('buildDev', ['jshint', 'prettify', 'clean:dev', 'sass:dev', 'copy:dev']);
+  grunt.registerTask('buildDev', ['jshint', 'jsbeautifier', 'clean:dev', 'sass:dev', 'copy:dev']);
   grunt.registerTask('build', ['jshint', 'clean:dist', 'sass:dist', 'uglify:helloWorld', 'htmlmin:dist']);
   grunt.registerTask('spotCheck', ['build', 'connect:dist']);
 };

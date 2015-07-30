@@ -2,8 +2,7 @@
   "indent": 2,
   "condense": true,
   "indent_inner_html": true,
-  "unformatted": [
-    "a",
-    "pre"
-  ]
+  "unformatted": ["a", "sub", "sup", "b", "i", "u"],
+  "preserveNewlines": true,
+  "maxPreserveNewlines": 10
 }
