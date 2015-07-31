@@ -46,21 +46,7 @@ module.exports = function (grunt) {
     jsbeautifier : {
         files : [allJavascriptFiles, allHtmlFiles, allStyleFiles],
         options : {
-          js: {
-              breakChainedMethods: false,
-              e4x: false,
-              evalCode: false,
-              indentWithTabs: false,
-              jslintHappy: false,
-              keepArrayIndentation: false,
-              keepFunctionIndentation: false,
-              spaceBeforeConditional: true,
-              spaceInParen: false,
-              unescapeStrings: false,
-              wrapLineLength: 0,
-              endWithNewline: true
-          },
-          html: { },
+          config: ".jsbeautifyrc",
           css: {
               fileTypes: [".scss"]
           }
