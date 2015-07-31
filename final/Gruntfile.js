@@ -1,11 +1,16 @@
 module.exports = function (grunt) {
   var allJavascriptFiles = 'www/**/*.js';
+  var helloWorldScript = 'www/js/helloWorld.js';
+  var scriptsCompiled = '/www/js/all.min.js';
+  
   var allHtmlFiles = 'www/**/*.html';
+  
   var allStyleFiles = 'www/**/*.scss';
   var mainStyleFile = 'www/sass/main.scss';
+  var stylesCompiled = '/www/styles/main.css';
+
   var distributionFolder = 'dist';
   var devFolder = 'dev';
-  var helloWorldScript = 'www/js/helloWorld.js';
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -25,7 +30,7 @@ module.exports = function (grunt) {
       },
       together: {
         src: allJavascriptFiles,
-        dest: distributionFolder + '/www/js/all.min.js'
+        dest: distributionFolder + scriptsCompiled
       },
       separately: {
         files: [
@@ -84,10 +89,10 @@ module.exports = function (grunt) {
             sourceMap: true
         },
         dev: {
-            files: [{ src: [mainStyleFile], dest: devFolder + '/www/styles/main.css' }]
+            files: [{ src: [mainStyleFile], dest: devFolder + stylesCompiled }]
         },
         dist: {
-            files: [{ src: [mainStyleFile], dest: distributionFolder + '/www/styles/main.css' }]
+            files: [{ src: [mainStyleFile], dest: distributionFolder + stylesCompiled }]
         }
     },
 
