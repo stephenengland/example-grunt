@@ -113,6 +113,12 @@ Build the css from Sass using grunt-sass
 grunt sass
 ```
 
+## What else should Grunt do?
+
+* Run your tests
+* Start your web application for local development
+* Wrap other command line scripts you run for development
+
 ## Other Tips and Tricks
 
 * Bash Shell tab auto-completion
