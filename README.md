@@ -122,7 +122,8 @@ Add the following to your ~/.bashrc file
 eval "$(grunt --completion=bash)"
 ```
 
-* Split your grunt config into multiple files - [load-grunt-configs project](https://github.com/creynders/load-grunt-configs)
+* [Enable live-reload on more complex web applications (IIS, Apache, etc)](https://github.com/gruntjs/grunt-contrib-watch#enabling-live-reload-in-your-html)
+* [Split your grunt config into multiple files](https://github.com/creynders/load-grunt-configs)
 * [Minify images](https://github.com/gruntjs/grunt-contrib-imagemin)
 * [Asset revisioning by using file content hashing](https://github.com/yeoman/grunt-filerev)
 * [Converting a set of images into a spritesheet](https://github.com/Ensighten/grunt-spritesmith)

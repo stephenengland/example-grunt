@@ -2,6 +2,7 @@ module.exports = function (grunt) {
   var allJavascriptFiles = 'www/**/*.js';
   var allHtmlFiles = 'www/**/*.html';
   var allStyleFiles = 'www/**/*.scss';
+  var mainStyleFile = 'www/sass/main.scss';
   var distributionFolder = 'dist';
   var devFolder = 'dev';
   var helloWorldScript = 'www/js/helloWorld.js';
@@ -24,7 +25,7 @@ module.exports = function (grunt) {
       },
       together: {
         src: allJavascriptFiles,
-        dest: distributionFolder + '/all.min.js'
+        dest: distributionFolder + '/www/js/all.min.js'
       },
       separately: {
         files: [
@@ -83,10 +84,10 @@ module.exports = function (grunt) {
             sourceMap: true
         },
         dev: {
-            files: [{ src: [allStyleFiles], dest: devFolder + '/www/styles/main.css' }]
+            files: [{ src: [mainStyleFile], dest: devFolder + '/www/styles/main.css' }]
         },
         dist: {
-            files: [{ src: [allStyleFiles], dest: distributionFolder + '/www/styles/main.css' }]
+            files: [{ src: [mainStyleFile], dest: distributionFolder + '/www/styles/main.css' }]
         }
     },
 
@@ -108,17 +109,18 @@ module.exports = function (grunt) {
       },
       scripts: {
         files: [allJavascriptFiles],
-        tasks: ['jshint', 'uglify:helloWorld']
+        tasks: ['newer:jshint', 'newer:uglify']
       },
       html: {
         files: [allHtmlFiles],
-        tasks: ['htmlmin:dev']
+        tasks: ['newer:htmlmin:dev']
       },
       styles: {
         files: [allStyleFiles],
         tasks: ['sass:dev']
       }
     },
+    //Static HTTP Server w/ livereload
     connect: {
       dev: {
         options: {
@@ -142,16 +144,26 @@ module.exports = function (grunt) {
         }
       }
     },
+    availabletasks: { 
+      tasks: {
+        options: {
+          filter: 'exclude',
+          tasks: ['any-newer', 'availabletasks', 'newer-postrun'] //These aren't commands you should/would call
+        }
+      }
+    },
     githooks: { build: { 'pre-commit': 'jsbeautifier jshint' } }
   });
 
   require('load-grunt-tasks')(grunt);
+  grunt.loadNpmTasks('grunt-available-tasks'); //For some reason, load-grunt-tasks doesn't like this NpmTask.
 
   //Set the default task - this will be what happens when you run the command  "grunt" in your directory.
   grunt.registerTask('default', ['buildDev', 'connect:dev', 'watch']);
-  //Additional tasks
 
   grunt.registerTask('buildDev', ['jshint', 'jsbeautifier', 'clean:dev', 'sass:dev', 'copy:dev']);
   grunt.registerTask('build', ['jshint', 'clean:dist', 'sass:dist', 'uglify:helloWorld', 'htmlmin:dist']);
   grunt.registerTask('spotCheck', ['build', 'connect:dist']);
+
+  //Discover all the tasks you can run by running "grunt availabletasks"
 };
