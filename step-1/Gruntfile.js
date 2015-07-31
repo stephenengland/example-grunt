@@ -6,8 +6,10 @@ module.exports = function (grunt) {
     jshint: {
       options: {
         jshintrc: ".jshintrc"
-      }
+      },
+      //Target - "actualCode"
       actualCode: ['www/**/*.js'],
+      //Target - "all"
       all: ['Gruntfile.js', 'www/**/*.js']
     },
 

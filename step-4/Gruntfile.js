@@ -2,6 +2,7 @@ module.exports = function (grunt) {
   var allJavascriptFiles = 'www/**/*.js';
   var allHtmlFiles = 'www/**/*.html';
   var allStyleFiles = 'www/**/*.scss';
+  var mainStyleFile = 'www/sass/main.scss';
   var distributionFolder = 'dist';
   var devFolder = 'dev';
   var helloWorldScript = 'www/js/helloWorld.js';
@@ -49,10 +50,10 @@ module.exports = function (grunt) {
       },
       allScripts: {
         options: {
-          sourceMapName : distributionFolder + '/all.min.js.map'
+          sourceMapName : distributionFolder + '/www/js/all.min.js.map'
         },
         src: allJavascriptFiles,
-        dest: distributionFolder + '/all.min.js'
+        dest: distributionFolder + '/www/js/all.min.js'
       },
       helloWorld: {
         options: {
@@ -110,7 +111,7 @@ module.exports = function (grunt) {
     },
     githooks: {
       build: {
-        'pre-commit': 'jshint prettify'
+        'pre-commit': 'jshint jsbeautifier'
       }
     },
     //Beautifier - Script and Html files
@@ -142,10 +143,10 @@ module.exports = function (grunt) {
             sourceMap: true
         },
         dev: {
-            files: [{ src: [allStyleFiles], dest: devFolder + '/www/styles/main.css' }]
+            files: [{ src: [mainStyleFile], dest: devFolder + '/www/styles/main.css' }]
         },
         dist: {
-            files: [{ src: [allStyleFiles], dest: distributionFolder + '/www/styles/main.css' }]
+            files: [{ src: [mainStyleFile], dest: distributionFolder + '/www/styles/main.css' }]
         }
     }
   });

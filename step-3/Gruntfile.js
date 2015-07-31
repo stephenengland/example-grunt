@@ -47,11 +47,11 @@ module.exports = function (grunt) {
       },
       scripts: {
         files: [allJavascriptFiles],
-        tasks: ['jshint', 'uglify:helloWorld']
+        tasks: ['jshint', 'copy:dev']
       },
       html: {
         files: [allHtmlFiles],
-        tasks: ['htmlmin:dev']
+        tasks: ['copy:dev']
       }
     },
     uglify: {
@@ -61,10 +61,10 @@ module.exports = function (grunt) {
       },
       allScripts: {
         options: {
-          sourceMapName : distributionFolder + '/all.min.js.map'
+          sourceMapName : distributionFolder + '/www/js/all.min.js.map'
         },
         src: allJavascriptFiles,
-        dest: distributionFolder + '/all.min.js'
+        dest: distributionFolder + '/www/js/all.min.js'
       },
       helloWorld: {
         options: {

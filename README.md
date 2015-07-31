@@ -92,7 +92,7 @@ grunt uglify:allScripts
 ## Step 4 - Git Hooks and more Front-End tasks
 
 ```
-npm install --save-dev grunt-githooks grunt-prettify
+npm install --save-dev grunt-githooks grunt-jsbeautifier grunt-sass
 ```
 
 Open the Gruntfile.js and copy paste [step-4/Gruntfile.js](step-4/Gruntfile.js) into it.
@@ -103,11 +103,15 @@ Use githooks by running the following command, then attempt a commit.
 grunt githooks:build
 ```
 
-Prettify your HTML by using grunt-prettify
+Prettify your HTML/JS/Sass by using grunt-jsbeautifier
 ```
-grunt prettify
+grunt jsbeautifier
 ```
 
+Build the css from Sass using grunt-sass
+```
+grunt sass
+```
 
 ## Other Tips and Tricks
 
